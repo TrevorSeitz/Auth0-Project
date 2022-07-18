@@ -19,7 +19,8 @@ app.secret_key = env.get("APP_SECRET_KEY")
 
 oauth = OAuth(app)
 
-oauth.register(
+
+oauth.register( 
     "auth0",
     client_id=env.get("AUTH0_CLIENT_ID"),
     client_secret=env.get("AUTH0_CLIENT_SECRET"),
@@ -28,7 +29,6 @@ oauth.register(
     },
     server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration',
 )
-
 
 # Controllers API
 @app.route("/")
@@ -39,20 +39,18 @@ def home():
         pretty=json.dumps(session.get("user"), indent=4),
     )
 
-
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
+    print(token)
     return redirect("/")
-
 
 @app.route("/login")
 def login():
     return oauth.auth0.authorize_redirect(
         redirect_uri=url_for("callback", _external=True)
     )
-
 
 @app.route("/logout")
 def logout():
