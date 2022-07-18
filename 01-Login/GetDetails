@@ -1,0 +1,18 @@
+from GetClients import client_list
+
+def get_client_names(client_list):
+    # client_names = []
+    # for client in client_list:
+    #     client_names.append(client["tenant"])
+    # print(client_names)
+
+    length = len(client_list)
+   
+    # Iterating the index
+    # same as 'for i in range(len(list))'
+    for i in range(length):
+        if i == 1:
+            print(client_list[i]["tenant"])
+
+
+get_client_names(client_list)
