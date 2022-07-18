@@ -42,11 +42,10 @@ result_data = json.loads(result_data_json)
 client_list = result_data["clients"]
 
 
-# def send_client_list(client_list):
-#     return client_list
+def send_client_list(client_list):
+    return client_list
 
-# return client_list
 
-print(result_data)                  # Json list of all users
+# print(result_data)                  # Json list of all users
 # print(result_data['total'])         # Just the count of total users
 # print(client_list)         # client list

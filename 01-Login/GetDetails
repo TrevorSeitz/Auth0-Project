@@ -1,18 +1,20 @@
 from GetClients import client_list
+from GetActions import action_list
 
 def get_client_names(client_list):
-    # client_names = []
-    # for client in client_list:
-    #     client_names.append(client["tenant"])
-    # print(client_names)
-
-    length = len(client_list)
-   
+    length = len(client_list)   
     # Iterating the index
-    # same as 'for i in range(len(list))'
     for i in range(length):
-        if i == 1:
-            print(client_list[i]["tenant"])
+        print(client_list[i]["tenant"])
 
 
+def get_action_list(action_list):
+    print(action_list)
+    for action in action_list:
+        print("Item - ", type(action_list[action])) 
+        print(action, " -> ", action_list[action])
+        print("TYPE - ",type(action_list))
+    # Iterating the index
+            
 get_client_names(client_list)
+get_action_list(action_list)

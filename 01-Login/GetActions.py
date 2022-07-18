@@ -37,15 +37,17 @@ res = conn.getresponse()
 data = res.read()
 result_data_json = data.decode('utf8').replace("'", '"')
 
-print("Data", data)
+# print("Data", type(result_data_json))
 
 # Load the JSON to a Python list & dump it back out as formatted JSON
-# result_data = json.loads(result_data_json)
-# client_list = result_data["actions"]
+result_data = json.loads(result_data_json)
+action_list = result_data
 
+# print(result_data)
+# print("Actions", type(result_data))
 
-# def send_client_list(client_list):
-#     return client_list
+def send_actions_list(actions_list):
+    return actions_list
 
 # return client_list
 
