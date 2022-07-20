@@ -40,9 +40,9 @@ def action_list(client_id, client_secret, path, manage_secret):
     # print("Data", type(result_data_json))
 
     # Load the JSON to a Python list & dump it back out as formatted JSON
-    # result_data = json.loads(result_data_json)
-    result_data = result_data_json
-    action_list = result_data
+    result_data_json = json.loads(result_data_json)
+    action_list = result_data_json
+    # action_list = result_data
 
     # print(result_data)
     # print("Actions", type(action_list))
