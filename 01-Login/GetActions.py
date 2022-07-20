@@ -24,9 +24,6 @@ def action_list(client_id, client_secret, path, manage_secret):
     data = res.read()
     tokendetails_json = data.decode('utf8').replace("'", '"')
     # Load the JSON to a Python list & dump it back out as formatted JSON
-    # tokendetails = json.loads(tokendetails_json)
-    # print("token details", res)
-
     #NOW GET THE USERS AND TOTAL
     conn = http.client.HTTPSConnection("auth0-project.us.auth0.com")
     payload = "{\"client_id\":\"{client_id}\",\"client_secret\":\"{client_secret}\",\"audience\":\"https:\"({path} + /api/v2/)\",\"grant_type\":\"client_credentials\"}"
@@ -35,23 +32,16 @@ def action_list(client_id, client_secret, path, manage_secret):
     conn.request("GET", "/api/v2/actions/actions", payload, headers)
     res = conn.getresponse()
     data = res.read()
+    
     result_data_json = data.decode('utf8').replace("'", '"')
-
-    # print("Data", type(result_data_json))
+    print("valid json type", type(result_data_json))
+    print("valid json", result_data_json)
 
     # Load the JSON to a Python list & dump it back out as formatted JSON
-    result_data_json = json.loads(result_data_json)
-    action_list = result_data_json
-    # action_list = result_data
-
-    # print(result_data)
-    # print("Actions", type(action_list))
-
-    # def send_actions_list(actions_list):
+    result_data = json.loads(result_data_json)
+    action_list = result_data
+    
+    
     return action_list
 
-action_list(client_id, client_secret, path, manage_secret)
-
-# print(result_data)                  # Json list of all users
-# print(result_data['total'])         # Just the count of total users
-# print(action_list)         # client list
+# action_list(client_id, client_secret, path, manage_secret)

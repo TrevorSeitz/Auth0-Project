@@ -13,7 +13,6 @@ path = env.get("AUTH0_DOMAIN")
 manage_secret = env.get("AUTH0_MANAGE_SECRET")
 
 def client_list(client_id, client_secret, path, manage_secret):
-    print("hello from client_list")
 # GET THE ACCESS TOKEN using the client_id and client_secret
     conn = http.client.HTTPSConnection("auth0-project.us.auth0.com")
     payload = "{\"client_id\":\"{client_id}\",\"client_secret\":\"{client_secret}\",\"audience\":\"https:\"({path} + /api/v2/)\",\"grant_type\":\"client_credentials\"}"
@@ -40,3 +39,5 @@ def client_list(client_id, client_secret, path, manage_secret):
     client_list = result_data["clients"]
 
     return client_list
+
+# client_list(client_id, client_secret, path, manage_secret)
