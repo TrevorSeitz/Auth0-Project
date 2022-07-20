@@ -1,20 +1,44 @@
-from GetClients import client_list
+# from GetClients import client_list
+# from typing_extensions import Self
 from GetActions import action_list
+from os import environ as env
+import json
+from pathlib import Path
 
-def get_client_names(client_list):
-    length = len(client_list)   
+client_id=env.get("AUTH0_CLIENT_ID"),
+client_secret=env.get("AUTH0_CLIENT_SECRET"),
+path = env.get("AUTH0_DOMAIN")
+manage_secret = env.get("AUTH0_MANAGE_SECRET")
+
+
+# def get_client_names():
+#     list = client_list(client_id, client_secret, path, manage_secret)
+#     length = len(list)   
+#     client_names = []
+#     # Iterating the list to get the client names
+#     for i in range(length):
+#         # print(list[i]["tenant"])
+#         client_names.append(list[i]["tenant"])
+#     return(client_names)
+
+
+def get_action_list():
+    list = action_list(client_id, client_secret, path, manage_secret)
+    # list_raw = json.load(raw)
+    print("Action List len - ", list)
+    # for action in list.keys():
+    #     print("action - ", type(list[action])) 
+    #     for item in list[action].keys():
+    #         print("item - ", item)
+
+    print("TYPE - ",type(list))
+    listDir = Path(list)
+    print("New TYPE - ",type(listDir))
     # Iterating the index
-    for i in range(length):
-        print(client_list[i]["tenant"])
-
-
-def get_action_list(action_list):
-    print(action_list)
-    for action in action_list:
-        print("Item - ", type(action_list[action])) 
-        print(action, " -> ", action_list[action])
-        print("TYPE - ",type(action_list))
-    # Iterating the index
+    # for x in list:
+    #     print (x)
+    #     for y in list[x]:
+    #         print (y,':',list[x][y])
             
-get_client_names(client_list)
-get_action_list(action_list)
+# get_client_names()
+get_action_list()
