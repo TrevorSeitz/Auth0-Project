@@ -39,9 +39,11 @@ def action_list():
     data = res.read()
     result_data_json = data.decode('utf8').replace("'", '"')
 
+    # print("result_data_json - ", result_data_json, "GETACTIONS - ", type(result_data_json))
     # Load the JSON to a Python list & dump it back out as formatted JSON
     result_data = json.loads(result_data_json)
     action_list = result_data
+    
     
     # print("GetActions  -  action_list - ", action_list)
     return action_list

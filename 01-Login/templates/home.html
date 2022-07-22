@@ -8,6 +8,7 @@
     <h1>Welcome {{session.userinfo.name}}!</h1>
     <p><a href="/logout" id="qsLogoutBtn">Logout</a></p>
     <div><pre>{{pretty}}</pre></div>
+    <div><pre>{{client_list}}</pre></div>
     {% for item in lyrics %}
       <tr>
         <td>{{item}}</td>

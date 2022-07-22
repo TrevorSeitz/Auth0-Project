@@ -4,6 +4,7 @@ import json
 from os import environ as env
 from urllib.parse import urlencode
 from dotenv import load_dotenv, find_dotenv
+from flask import Flask, request, redirect, render_template, session, url_for
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -33,6 +34,10 @@ def get_token():
     token = message['access_token'] # get the token
 
     # print("token - ", token)
+    # session["auth_token"] = token
+    
+    app = Flask(__name__)
+    app.token = token
     return token
 
 # get_token(AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_API_IDENTIFIER)

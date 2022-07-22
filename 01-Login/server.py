@@ -16,23 +16,23 @@ if ENV_FILE:
     load_dotenv(ENV_FILE)
     
 app = Flask(__name__)
-app.secret_key = env.get("AUTH0_MANAGE_SECRET")
+app.secret_key = env.get("CLIENT_SECRET")
 
 oauth = OAuth(app)
 
 oauth.register(
     "auth0",
-    client_id=env.get("AUTH0_CLIENT_ID"),
-    client_secret=env.get("AUTH0_CLIENT_SECRET"),
+    client_id=env.get("CLIENT_ID"),
+    client_secret=env.get("CLIENT_SECRET"),
     client_kwargs={
         "scope": "openid profile email",
     },
     server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
 )
 
-
 @app.route("/login")
 def login():
+    print("login - ")
     return oauth.auth0.authorize_redirect(
         redirect_uri=url_for("callback", _external=True)
     )
@@ -64,7 +64,7 @@ def home():
         "home.html",
         session=session.get("user"),
         pretty=json.dumps(session.get("user"), indent=4),
-        lyrics=main_list(),
+        client_list =json.dumps(session.get("auth_token"), indent=4),
     )
 
 if __name__ == "__main__":
