@@ -55,23 +55,27 @@ payload = {
         "grant_type": "client_credentials" 
         }
         
-print("payload: ", payload)
+# print("payload: ", payload)
 
 new_payload = urlencode(payload)
 
-print("new_payload: ", new_payload)
+# print("new_payload: ", new_payload)
 
-headers = { 'content-type': "application/json"}
+# headers = { 'content-type': "application/json"}
+
+headers = { 'content-type': "application/x-www-form-urlencoded" }
 
 conn.request("POST", "/oauth/token", new_payload, headers)
 # THIS returns a jwt token - res
 res = conn.getresponse()
-print("res: ", res)
+# print("res: ", jwt.decode(res))
 data = res.read()
-message = json.loads(data.decode("utf-8"))
+# print("data: ", data)
+tokendetails_json = data.decode('utf8').replace("'", '"')  #this creates invalid json - why?
+# print("tokendetails_json: ", tokendetails_json)
+message = json.loads(tokendetails_json)
+# print("message: ", message)
 token = message['access_token']
-print("res: ", res)
-print("message: ", message)
 
 print("token ", token)
 

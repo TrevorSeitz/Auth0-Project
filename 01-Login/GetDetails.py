@@ -18,6 +18,7 @@ def get_client_names():
     client_names = []
     # Iterating the list to get the client names
     for i in range(length):
+        print("client_names: ", list[i]["name"])
         client_names.append(list[i]["name"])
     return(client_names)
 
