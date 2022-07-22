@@ -1,34 +1,9 @@
-# import http.client
-# import json
-# from os import environ as env
-
-
-# client_secrets = env.get("AUTH0_CLIENT_SECRET")
-# conn = http.client.HTTPSConnection("auth0-project.us.auth0.com")
-
-# payload = "grant_type=client_credentials&client_id=zd8SShr3UL94mkQHDIulCHJ59Vg1Hvj2&client_secret=JRQ7PIgGI8WgyI_VhrtDaD4SaYg0WdJ_tqNlqW1wsYQc-UQRtYNIYID5K6ddxwBK&audience=https%3A%2F%2Fauth0-project.us.auth0.com%2Fapi%2Fv2%2F"
-
-# headers = { 'content-type': "application/x-www-form-urlencoded" }
-
-# headers = { 'content-type': "application/x-www-form-urlencoded" }
-
-# conn.request("POST", "/auth0-project.us.auth0.com/oauth/token", payload, headers)
-
-# res = conn.getresponse()
-# data = res.read()
-
-# print(data.decode("utf-8"))
-
 import http.client
 import json
+
 from os import environ as env
-
-from urllib.parse import urlencode, quote_plus
-
+from urllib.parse import urlencode
 from dotenv import load_dotenv, find_dotenv
-from flask import Flask, request, jsonify, _request_ctx_stack, Response
-from flask_cors import cross_origin
-from jose import jwt
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -37,46 +12,27 @@ AUTH0_DOMAIN = env.get("AUTH0_DOMAIN")
 AUTH0_API_IDENTIFIER = env.get("API_IDENTIFIER")
 AUTH0_CLIENT_ID = env.get("CLIENT_ID")
 AUTH0_CLIENT_SECRET= env.get("CLIENT_SECRET")
-AUTH0_OTHER_IDENTIFIER= env.get("OTHER_IDENTIFIER")
-ALGORITHMS = ["RS256"]
-APP = Flask(__name__)
 
-print("==========================================================")
+def get_token(AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET):
+    conn = http.client.HTTPSConnection((AUTH0_DOMAIN))
+    payload = { 
+            "client_id": AUTH0_CLIENT_ID,
+            "client_secret": AUTH0_CLIENT_SECRET,
+            "audience": AUTH0_API_IDENTIFIER,
+            "grant_type": "client_credentials" 
+            }
+    headers = { 'content-type': "application/x-www-form-urlencoded" }
 
-conn = http.client.HTTPSConnection((AUTH0_DOMAIN))
-# conn = http.client.HTTPSConnection("")
+    conn.request("POST", "/oauth/token", urlencode(payload), headers)
+    # THIS returns a jwt token - res
+    res = conn.getresponse()
+    data = res.read() 
+    tokendetails_json = data.decode('utf8').replace("'", '"') # convert to json
+    message = json.loads(tokendetails_json) 
+    token = message['access_token'] # get the token
 
-# payload = "grant_type=client_credentials&client_id=MY_CLIENT_ID%7D&client_secret=MY_CLIENT_SECRET&audience=MY_API_IDENTIFIER"
-# payload = "grant_type=client_credentials&client_id=%24%7BMY_CLIENT_ID%7D&client_secret=MY_CLIENT_SECRET&audience=MY_API_IDENTIFIER"
-payload = { 
-        "client_id": AUTH0_CLIENT_ID,
-        "client_secret": AUTH0_CLIENT_SECRET,
-        "audience": AUTH0_API_IDENTIFIER,
-        "grant_type": "client_credentials" 
-        }
-        
-# print("payload: ", payload)
+    print("token ", token)
 
-new_payload = urlencode(payload)
+    return token
 
-# print("new_payload: ", new_payload)
-
-# headers = { 'content-type': "application/json"}
-
-headers = { 'content-type': "application/x-www-form-urlencoded" }
-
-conn.request("POST", "/oauth/token", new_payload, headers)
-# THIS returns a jwt token - res
-res = conn.getresponse()
-# print("res: ", jwt.decode(res))
-data = res.read()
-# print("data: ", data)
-tokendetails_json = data.decode('utf8').replace("'", '"')  #this creates invalid json - why?
-# print("tokendetails_json: ", tokendetails_json)
-message = json.loads(tokendetails_json)
-# print("message: ", message)
-token = message['access_token']
-
-print("token ", token)
-
-# print(CLIENT_SECRET)
+get_token(AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET)
