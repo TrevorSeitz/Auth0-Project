@@ -1,20 +1,39 @@
 import http.client
 import json
+
 from os import environ as env
+from urllib.parse import urlencode
+from dotenv import load_dotenv, find_dotenv
 
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+AUTH0_API_IDENTIFIER = env.get("API_IDENTIFIER")
+AUTH0_DOMAIN = env.get("AUTH0_DOMAIN")
+AUTH0_CLIENT_ID = env.get("CLIENT_ID")
+AUTH0_CLIENT_SECRET= env.get("CLIENT_SECRET")
 
-client_secrets = env.get("AUTH0_CLIENT_SECRET")
-conn = http.client.HTTPSConnection("auth0-project.us.auth0.com")
+# def get_token(AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_API_IDENTIFIER):
+def get_token():
+    conn = http.client.HTTPSConnection((AUTH0_DOMAIN))
+    payload = { 
+            "client_id": AUTH0_CLIENT_ID,
+            "client_secret": AUTH0_CLIENT_SECRET,
+            "audience": AUTH0_API_IDENTIFIER,
+            "grant_type": "client_credentials" 
+            }
+    headers = { 'content-type': "application/x-www-form-urlencoded" }
 
-payload = "grant_type=client_credentials&client_id=zd8SShr3UL94mkQHDIulCHJ59Vg1Hvj2&client_secret=JRQ7PIgGI8WgyI_VhrtDaD4SaYg0WdJ_tqNlqW1wsYQc-UQRtYNIYID5K6ddxwBK&audience=https%3A%2F%2Fauth0-project.us.auth0.com%2Fapi%2Fv2%2F"
+    conn.request("POST", "/oauth/token", urlencode(payload), headers)
+    # THIS returns a jwt token - res
+    res = conn.getresponse()
+    data = res.read() 
+    tokendetails_json = data.decode('utf8').replace("'", '"') # convert to json
+    message = json.loads(tokendetails_json) 
+    token = message['access_token'] # get the token
 
-headers = { 'content-type': "application/x-www-form-urlencoded" }
+    # print("token - ", token)
+    return token
 
-headers = { 'content-type': "application/x-www-form-urlencoded" }
-
-conn.request("POST", "/auth0-project.us.auth0.com/oauth/token", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
+# get_token(AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_API_IDENTIFIER)
+get_token()
