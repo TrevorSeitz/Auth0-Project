@@ -16,23 +16,37 @@ if ENV_FILE:
     load_dotenv(ENV_FILE)
     
 app = Flask(__name__)
-app.secret_key = env.get("AUTH0_MANAGE_SECRET")
+app.secret_key = env.get("CLIENT_SECRET")
 
 oauth = OAuth(app)
 
 oauth.register(
     "auth0",
-    client_id=env.get("AUTH0_CLIENT_ID"),
-    client_secret=env.get("AUTH0_CLIENT_SECRET"),
+    client_id=env.get("CLIENT_ID"),
+    client_secret=env.get("CLIENT_SECRET"),
     client_kwargs={
         "scope": "openid profile email",
     },
     server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
 )
 
+client_action_list = main_list()
+
+def iterate(main_list):
+    for i in range(len(main_list)):
+        for key, value in main_list[i].items():
+            # print(key, value)
+            
+            if key == "Name":
+                # print("\n", "\n", value)
+                json.dumps(value,":", indent=4)
+            elif key == "Action Name":
+                # print("  - ", value)
+                json.dumps("  -  ",value, indent=4)
 
 @app.route("/login")
 def login():
+    print("login - ")
     return oauth.auth0.authorize_redirect(
         redirect_uri=url_for("callback", _external=True)
     )
@@ -52,7 +66,7 @@ def logout():
         + urlencode(
             {
                 "returnTo": url_for("home", _external=True),
-                "client_id": env.get("AUTH0_CLIENT_ID"),
+                "client_id": env.get("CLIENT_ID"),
             },
             quote_via=quote_plus,
         )
@@ -63,9 +77,13 @@ def home():
     return render_template(
         "home.html",
         session=session.get("user"),
-        pretty=json.dumps(session.get("user"), indent=4),
-        lyrics=main_list(),
+        # pretty=json.dumps(session.get("user"), indent=4),
+        client_list =json.dumps(client_action_list, indent=4),
+        client_list2 =client_action_list,
+        
     )
+    
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=env.get("PORT", 3000))
