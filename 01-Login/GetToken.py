@@ -8,13 +8,13 @@ from dotenv import load_dotenv, find_dotenv
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
+AUTH0_API_IDENTIFIER = env.get("API_IDENTIFIER")
 AUTH0_DOMAIN = env.get("AUTH0_DOMAIN")
 AUTH0_CLIENT_ID = env.get("CLIENT_ID")
 AUTH0_CLIENT_SECRET= env.get("CLIENT_SECRET")
 
-def get_token(AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET):
-    
-    AUTH0_API_IDENTIFIER = env.get("API_IDENTIFIER")
+# def get_token(AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_API_IDENTIFIER):
+def get_token():
     conn = http.client.HTTPSConnection((AUTH0_DOMAIN))
     payload = { 
             "client_id": AUTH0_CLIENT_ID,
@@ -35,4 +35,5 @@ def get_token(AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET):
     # print("token - ", token)
     return token
 
-# get_token(AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET)
+# get_token(AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_API_IDENTIFIER)
+get_token()

@@ -16,8 +16,8 @@ AUTH0_API_IDENTIFIER = env.get("API_IDENTIFIER")
 AUTH0_CLIENT_ID = env.get("CLIENT_ID")
 AUTH0_CLIENT_SECRET= env.get("CLIENT_SECRET")
 
-def client_list(AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_API_IDENTIFIER):
-    token = "Bearer " + get_token(AUTH0_DOMAIN, AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET)
+def client_list():
+    token = "Bearer " + get_token()
     
     conn = http.client.HTTPSConnection((AUTH0_DOMAIN))
     payload = { 
@@ -35,11 +35,10 @@ def client_list(AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_API_IDENTIFIER):
 
     # Load the JSON to a Python list & dump it back out as formatted JSON
     result_data = json.loads(result_data_json)
-    print("result_data - ", result_data)
     client_list = result_data
     
-    print("client_list - ", client_list)
-    
+    # print("client_list - ", client_list)
     return client_list
 
-client_list(AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_API_IDENTIFIER)
+# client_list(AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_API_IDENTIFIER, AUTH0_DOMAIN)
+client_list()
