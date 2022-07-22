@@ -8,8 +8,7 @@ from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, request, redirect, render_template, session, url_for
-
-
+from CombineLists import main_list
 
 
 ENV_FILE = find_dotenv()
@@ -65,6 +64,7 @@ def home():
         "home.html",
         session=session.get("user"),
         pretty=json.dumps(session.get("user"), indent=4),
+        lyrics=main_list(),
     )
 
 if __name__ == "__main__":
