@@ -33,6 +33,7 @@ def action_list():
             }
     headers = { 'content-type': "application/json","authorization": token }
 
+
     conn.request("GET", "/api/v2/actions/actions", urlencode(payload), headers)
     res = conn.getresponse()
     data = res.read()
