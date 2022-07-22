@@ -6,16 +6,28 @@
   <body>
     {% if session %}
     <h1>Welcome {{session.userinfo.name}}!</h1>
+    <h1>to the Client Action lister</h1>
+    <table id = "t">
+        {% for item in client_list2 %}
+          {% for key, value in item.items() %}
+            {%if key == "Name":%}
+            <tr>
+              <td>{{value}}</td>
+            </tr>
+            {%endif%}
+            {%if key == "Action Name"%}
+            <tr>
+              <td> &nbsp;&nbsp;&nbsp; - {{value}}</td>
+            </tr>
+            {%endif%}
+          {% endfor %}
+        {% endfor %}
+    </table>
+
     <p><a href="/logout" id="qsLogoutBtn">Logout</a></p>
-    <div><pre>{{pretty}}</pre></div>
-    <div><pre>{{client_list}}</pre></div>
-    {% for item in lyrics %}
-      <tr>
-        <td>{{item}}</td>
-      </tr>
-    {% endfor %}
     {% else %}
     <h1 id="profileDropDown">Welcome Guest</h1>
+    <h1>to the Client Action lister</h1>
     <p><a href="/login" id="qsLoginBtn">Login</a></p>
     {% endif %}
   </body>
