@@ -11,10 +11,6 @@ client_secret=env.get("AUTH0_CLIENT_SECRET"),
 path = env.get("AUTH0_DOMAIN")
 manage_secret = env.get("AUTH0_MANAGE_SECRET")
 
-def convert(list):
-    # print("type of list - )",  type(list))
-    return (*list, )
-
 def get_client_names():
     list = client_list(client_id, client_secret, path, manage_secret)
     length = len(list)   
@@ -41,7 +37,6 @@ def get_action_list():
     
     return(list_of_actions)
    
-            
-    
+                
 # get_client_names()
 # get_action_list()
