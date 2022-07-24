@@ -30,23 +30,9 @@ oauth.register(
     server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
 )
 
-# client_action_list = main_list()
-
-# def iterate(main_list):
-#     for i in range(len(main_list)):
-#         for key, value in main_list[i].items():
-#             # print(key, value)
-            
-#             if key == "Name":
-#                 # print("\n", "\n", value)
-#                 json.dumps(value,":", indent=4)
-#             elif key == "Action Name":
-#                 # print("  - ", value)
-#                 json.dumps("  -  ",value, indent=4)
-
 @app.route("/login")
 def login():
-    print("login - ")
+    # print("login - ")
     return oauth.auth0.authorize_redirect(
         redirect_uri=url_for("callback", _external=True)
     )
@@ -55,7 +41,15 @@ def login():
 def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
-    return redirect("/")
+    role = token["userinfo"]["https://my-app.example.com/roles"][0]
+    # return redirect("/")
+    if role == 'Admin':
+        print("if Role - ", role)
+        return redirect("/")
+    else:
+        print("Else Role - ", role)
+        return redirect("/logout")
+
 
 @app.route("/logout")
 def logout():
@@ -80,9 +74,15 @@ def home():
         # pretty=json.dumps(session.get("user"), indent=4),
         # client_list =json.dumps(client_action_list, indent=4),
         client_list=main_list(),
-        
     )
     
+# @app.route("/user")
+# def user_login():
+#     print("You Must be an admin to access this page")
+#     print("login - ")
+#     return oauth.auth0.authorize_redirect(
+#         redirect_uri=url_for("callback", _external=True)
+#     )
 
 
 if __name__ == "__main__":
