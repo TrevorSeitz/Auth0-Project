@@ -8,16 +8,16 @@
     <h1>Welcome {{session.userinfo.name}}!</h1>
     <h1>to the Client Action lister</h1>
     <table id = "t">
-        {% for item in client_list2 %}
+        {% for item in client_list %}
           {% for key, value in item.items() %}
             {%if key == "Name":%}
             <tr>
-              <td>{{value}}</td>
+              
+              <td><br><br>{{value}}</td>
             </tr>
             {%endif%}
             {%if key == "Actions"%}
             <tr>
-              <td>Action Name</td>
               <tr>
                 {% for action in value %}
                   {%for key, value in action.items()%}
