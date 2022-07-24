@@ -30,19 +30,19 @@ oauth.register(
     server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
 )
 
-client_action_list = main_list()
+# client_action_list = main_list()
 
-def iterate(main_list):
-    for i in range(len(main_list)):
-        for key, value in main_list[i].items():
-            # print(key, value)
+# def iterate(main_list):
+#     for i in range(len(main_list)):
+#         for key, value in main_list[i].items():
+#             # print(key, value)
             
-            if key == "Name":
-                # print("\n", "\n", value)
-                json.dumps(value,":", indent=4)
-            elif key == "Action Name":
-                # print("  - ", value)
-                json.dumps("  -  ",value, indent=4)
+#             if key == "Name":
+#                 # print("\n", "\n", value)
+#                 json.dumps(value,":", indent=4)
+#             elif key == "Action Name":
+#                 # print("  - ", value)
+#                 json.dumps("  -  ",value, indent=4)
 
 @app.route("/login")
 def login():
@@ -77,9 +77,9 @@ def home():
     return render_template(
         "home.html",
         session=session.get("user"),
-        pretty=json.dumps(session.get("user"), indent=4),
+        # pretty=json.dumps(session.get("user"), indent=4),
         # client_list =json.dumps(client_action_list, indent=4),
-        client_list2=main_list,
+        client_list=main_list(),
         
     )
     
