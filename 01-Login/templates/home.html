@@ -15,9 +15,20 @@
               <td>{{value}}</td>
             </tr>
             {%endif%}
-            {%if key == "Action Name"%}
+            {%if key == "Actions"%}
             <tr>
-              <td> &nbsp;&nbsp;&nbsp; - {{value}}</td>
+              <td>Action Name</td>
+              <tr>
+                {% for action in value %}
+                  {%for key, value in action.items()%}
+                    {%if key == "Action Name"%}
+                      <tr>
+                      <td> &nbsp;&nbsp;&nbsp; - {{value}}</td>
+                      </tr>
+                    {%endif%}
+                  {%endfor%}
+                {% endfor %}
+              </tr>
             </tr>
             {%endif%}
           {% endfor %}
