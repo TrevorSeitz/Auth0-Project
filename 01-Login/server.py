@@ -77,7 +77,7 @@ def home():
     return render_template(
         "home.html",
         session=session.get("user"),
-        pretty=json.dumps(session.get("user"), indent=4),
+        # pretty=json.dumps(session.get("user"), indent=4),
         client_list =json.dumps(client_action_list, indent=4),
         client_list2 =client_action_list,
         
