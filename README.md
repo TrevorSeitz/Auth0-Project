@@ -14,7 +14,7 @@ Project is created with:
 To run this project, download or clone this repo and run it in Python3.
 /usr/local/bin/python3 (or where ever Python3 is stored) **repo location**/Auth0-Project/01-Login/server.py.
 
-* The credentials examples are in the .env.example file.  You should add your own or request the test client information.
+* The credentials examples are in the .env.example file.  You should add your credentials to the file or request the test client information, and then save the file as simply .env.
 
 ## Required Features
 
