@@ -4,12 +4,10 @@ import requests
 
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
-
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, request, redirect, render_template, session, url_for
 from CombineLists import main_list
-
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -32,7 +30,6 @@ oauth.register(
 
 @app.route("/login")
 def login():
-    # print("login - ")
     return oauth.auth0.authorize_redirect(
         redirect_uri=url_for("callback", _external=True)
     )
@@ -52,7 +49,6 @@ def callback():
     else:
         print("Else Role - ", role)
         return redirect("/logout")
-
 
 @app.route("/logout")
 def logout():
@@ -74,19 +70,8 @@ def home():
     return render_template(
         "home.html",
         session=session.get("user"),
-        # pretty=json.dumps(session.get("user"), indent=4),
-        # client_list =json.dumps(client_action_list, indent=4),
         client_list=main_list(),
     )
-    
-# @app.route("/user")
-# def user_login():
-#     print("You Must be an admin to access this page")
-#     print("login - ")
-#     return oauth.auth0.authorize_redirect(
-#         redirect_uri=url_for("callback", _external=True)
-#     )
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=env.get("PORT", 3000))

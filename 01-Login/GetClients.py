@@ -1,6 +1,5 @@
 import http.client
 import json
-
 from os import environ as env
 from urllib.parse import urlencode
 from GetToken import get_token
@@ -31,14 +30,7 @@ def client_list():
     res = conn.getresponse()
     data = res.read()
     result_data_json = data.decode('utf8').replace("'", '"')
-    # print("result_data_json - ", result_data_json, "GETCLIENTS - ", type(result_data_json))
-
     # Load the JSON to a Python list & dump it back out as formatted JSON
     result_data = json.loads(result_data_json)
     client_list = result_data
-    
-    # print("client_list - ", client_list)
     return client_list
-
-# client_list(AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_API_IDENTIFIER, AUTH0_DOMAIN)
-client_list()
