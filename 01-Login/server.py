@@ -41,8 +41,11 @@ def login():
 def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
-    role = token["userinfo"]["https://my-app.example.com/roles"][0]
-    # return redirect("/")
+    user = session["user"]
+    role = ""
+    print("user type - ", type(user))
+    
+    if user["userinfo"]["https://my-app.example.com/roles"] and user["userinfo"]["https://my-app.example.com/roles"][0] == "Admin":role = user["userinfo"]["https://my-app.example.com/roles"][0]
     if role == 'Admin':
         print("if Role - ", role)
         return redirect("/")
