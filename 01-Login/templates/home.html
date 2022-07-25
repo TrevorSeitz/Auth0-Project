@@ -7,6 +7,7 @@
     {% if session %}
     <h1>Welcome {{session.userinfo.name}}!</h1>
     <h1>to the Client Action lister</h1>
+    <p><a href="/" id="qsRefreshBtn">Refresh</a></p>
     <table id = "t">
         {% for item in client_list %}
           {% for key, value in item.items() %}
