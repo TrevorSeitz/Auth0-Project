@@ -1,12 +1,10 @@
 import http.client
 import json
-
 from os import environ as env
-from urllib.parse import quote_plus, urlencode
+from urllib.parse import urlencode
 from GetToken import get_token
-from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
-from flask import Flask, redirect, render_template, session, url_for
+from flask import Flask
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -37,6 +35,3 @@ def action_list():
     action_list = result_data
     
     return action_list
-
-# action_list(AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, AUTH0_API_IDENTIFIER, AUTH0_DOMAIN)
-# action_list()
