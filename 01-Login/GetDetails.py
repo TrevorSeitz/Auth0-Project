@@ -29,7 +29,7 @@ def get_action_list():
     # Iterating the list to get the actions
     for i in range(length):
         action = {}
-        action["Action Name"] = list_dict["actions"][i]["name"]
+        action["Action Name"] = list_dict["actions"][i]["name"] + " - Trigger: " + list_dict["actions"][i]["supported_triggers"][0]["id"] 
         action["code"] = list_dict["actions"][i]["code"]
         list_of_actions.append(action)
     return(list_of_actions)
