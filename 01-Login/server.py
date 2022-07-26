@@ -41,7 +41,6 @@ def callback():
     user = session["user"]
     if user["userinfo"]["https://my-app.example.com/roles"]: 
         for i in user["userinfo"]["https://my-app.example.com/roles"]:
-            print("Role = ", i)
             if i == 'Admin':
                 return redirect("/")
     return redirect("/logout")

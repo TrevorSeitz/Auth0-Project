@@ -18,3 +18,4 @@ def main_list():
                 if client_list[i] in action_list[j]["code"]:
                     actions.append({"Action Name":action_list[j]["Action Name"]})
             main_list.append({"Name":client_list[i-1], "Actions":actions})
+    return main_list
