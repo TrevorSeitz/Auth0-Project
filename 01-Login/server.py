@@ -39,16 +39,12 @@ def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
     user = session["user"]
-    role = ""
-    print("user type - ", type(user))
-    
-    if user["userinfo"]["https://my-app.example.com/roles"] and user["userinfo"]["https://my-app.example.com/roles"][0] == "Admin":role = user["userinfo"]["https://my-app.example.com/roles"][0]
-    if role == 'Admin':
-        print("if Role - ", role)
-        return redirect("/")
-    else:
-        print("Else Role - ", role)
-        return redirect("/logout")
+    if user["userinfo"]["https://my-app.example.com/roles"]: 
+        for i in user["userinfo"]["https://my-app.example.com/roles"]:
+            print("Role = ", i)
+            if i == 'Admin':
+                return redirect("/")
+    return redirect("/logout")
 
 @app.route("/logout")
 def logout():
