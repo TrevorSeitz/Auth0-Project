@@ -11,7 +11,9 @@ Project is created with:
 
 
 ## Setup
-To run this project, download or clone this repo and run it in the terminal (or Shell) at the 01-Login/ level of the directory it is in.  run it by typing:  python3 server.py.
+To run this project, you must first grant the client access to Management API.  To do this, you will need to go to your manage.auth0.com Dashboard, click on "Applications", then "APIs", and finally "Auth0 Management API".Once there, you will need to go to the "Machine to Machine Applications" tab and ensure your application is authorized.  Then, click on the deopdown arrow to the right of the authorization switch and enable the permissions to "read:clients" and "read:actions".
+
+Once the client is authorized, download or clone this repo and run it in the terminal (or Shell) at the 01-Login/ level of the directory it is in.  run it by typing:  python3 server.py.
 
 * The credentials examples are in the .env.example file.  You should add your credentials to the file or request the test client information, and then save the file as simply .env.
 
